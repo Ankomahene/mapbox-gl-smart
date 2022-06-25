@@ -1,35 +1,34 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { IMocked, Mock, setupFunction } from '@morgan-stanley/ts-mocking-bird';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
+import { DataService } from './services/data.service';
 
 describe('AppComponent', () => {
+  let mockStore: IMocked<Store>;
+  let mockDataService: IMocked<DataService>;
+
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+    mockStore = Mock.create<Store>().setup(setupFunction('dispatch', () => {}));
+
+    mockDataService = Mock.create<DataService>().setup(
+      setupFunction('getApartmentData', () => of())
+    );
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  function getInstance() {
+    return new AppComponent(mockStore.mock, mockDataService.mock);
+  }
+
+  it('initialized app successfully', () => {
+    const appComponent = getInstance();
+    expect(appComponent).toBeDefined();
   });
 
-  it(`should have as title 'mapbox-assessment-smart'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('mapbox-assessment-smart');
-  });
+  it(`should check getApartmentData was called from service`, () => {
+    const appComponent = getInstance();
+    appComponent.ngOnInit();
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('mapbox-assessment-smart app is running!');
+    expect(mockDataService.withFunction('getApartmentData')).wasCalledOnce();
   });
 });

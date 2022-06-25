@@ -16,6 +16,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "smart-mapbox": [
+        "dist/smart-mapbox/smart-mapbox",
+        "dist/smart-mapbox"
+      ]
+    },
     "target": "es2017",
     "module": "es2020",
     "lib": [

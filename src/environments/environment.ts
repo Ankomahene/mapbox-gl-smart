@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  mapboxAccessToken:
+    'pk.eyJ1IjoiYW5rb21haGVuZSIsImEiOiJjbDRrZGowZGUxNTBqM2VtZTlkMTViM2YyIn0.Bvx9ifPFVUq-t4GVf_3VsA',
+  apiKey: 'SoL71Zyf7SmLrVYWC7fQ',
+  dataBaseUrl: 'https://app.smartapartmentdata.com/List/json/listItems.aspx',
 };
 
 /*

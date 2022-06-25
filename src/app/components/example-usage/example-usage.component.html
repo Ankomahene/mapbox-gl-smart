@@ -1,0 +1,38 @@
+<section class="main">
+  <aside>
+    <div class="sider">
+      <button (click)="toggleNavigationControl()">{{!isNavigationControlActive ?
+        "Show" : "Hide"}} navigation
+        Controls</button><br>
+      <button (click)="toggleFullscreenControl()">{{!isFullScreenControlActive ?
+        "Show" : "Hide"}} full screen
+        Control</button><br>
+      <button (click)="toggleGeoLocateControl()">{{!isGeoLocateControlActive ?
+        "Show" : "Hide"}} geo locate
+        Control</button><br>
+      <button (click)="toggleGeoCoderControl()">{{!isGeoCoderControlActive ?
+        "Show" : "Hide"}} geo coder
+        Control</button>
+      <hr class="divider">
+      <div>Select Account to load Pins</div>
+      <ul>
+        <li *ngFor="let account of accounts"><button (click)="selectAccount(account)">{{account.company}}</button></li>
+      </ul>
+
+      <button (click)="autoZoomOut()">Show all pins</button><br>
+
+      <div *ngIf="isSelectedData()" class="account-details">
+        <div class="title">{{selectedData?.agentInfo?.company}}</div>
+        <div *ngFor="let record of selectedData?.records;" class="record" (click)="zoomTo(record.geocode)">
+          <div class="name">{{record.name}}</div>
+          <div class="address">{{record.streetAddress}}</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="map-section">
+    <div class="map-wrapper">
+      <div [id]="'smart-map'" class="map-container"></div>
+    </div>
+  </div>
+</section>
